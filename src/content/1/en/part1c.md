@@ -217,12 +217,13 @@ the component won't re-render. We can get the component to re-render by calling 
 
 ```js
 let counter = 1
+```
 
-const refresh = () => {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <App counter={counter} />
-  )
-}
+Since the `ReactDOM.createRoot` can only be called once in React 18, then after that `root.render()` renders the component. 
+
+```js
+const root = 
+  ReactDOM.createRoot(document.getElementById('root'))
 
 refresh()
 counter += 1
@@ -237,7 +238,11 @@ Now the component <i>renders three times</i>, first with the value 1, then 2, an
 
 We can implement slightly more interesting functionality by re-rendering and incrementing the counter every second by using [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
 
+Subsequent updates use be done using ` root.render()` as needed.
 ```js
+const refresh = ()=> root.render(
+    <App counter={counter} />
+  )
 setInterval(() => {
   refresh()
   counter += 1
